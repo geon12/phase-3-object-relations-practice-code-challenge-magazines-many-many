@@ -8,7 +8,10 @@ class Reader < ActiveRecord::Base
     end
 
     def cancel_subscription(magazine)
-        Subscription.destroy(self.id)
+        subscription_id = Subscription.find_by(magazine_id: magazine.id,reader_id:self.id).id
+        if subscription_id
+            Subscription.destroy(subscription_id)
+        end
     end
 
     def total_subscription_price
